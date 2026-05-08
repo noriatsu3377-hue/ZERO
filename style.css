@@ -241,6 +241,14 @@ body {
     background: transparent;
     transition: all 0.5s ease;
     border-radius: 2px;
+    white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+    .cta-button {
+        padding: 1rem 2rem;
+        font-size: 0.9rem;
+    }
 }
 
 .cta-button::before {
