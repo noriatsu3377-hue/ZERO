@@ -52,6 +52,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // --- Generic Fade Up Animations ---
     gsap.utils.toArray('.gs-fade-up').forEach(elem => {
+        let delay = 0;
+        if (elem.classList.contains('delay-1')) delay = 0.3;
+        else if (elem.classList.contains('delay-2')) delay = 0.6;
+        else if (elem.classList.contains('delay-3')) delay = 0.9;
+
         gsap.fromTo(elem, 
             { opacity: 0, y: 50, filter: "blur(5px)" },
             { 
@@ -59,6 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 y: 0, 
                 filter: "blur(0px)",
                 duration: 1.5, 
+                delay: delay,
                 ease: "power2.out",
                 scrollTrigger: {
                     trigger: elem,

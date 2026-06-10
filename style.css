@@ -484,7 +484,17 @@ body {
     font-size: clamp(1.5rem, 4vw, 2.5rem);
     font-weight: 200;
     letter-spacing: 0.3em;
-    margin-bottom: 4rem;
+    margin-bottom: 2.5rem;
+}
+.final-description {
+    margin-bottom: 3.5rem;
+}
+.final-subtext {
+    font-size: clamp(0.85rem, 1.8vw, 1.05rem);
+    color: var(--text-muted);
+    font-weight: 300;
+    line-height: 2;
+    letter-spacing: 0.1em;
 }
 
 /* Outro */
