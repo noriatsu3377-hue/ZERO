@@ -3,6 +3,7 @@
     --text-main: #f0f0f0;
     --text-muted: #888888;
     --accent-glow: rgba(200, 220, 255, 0.4);
+    --accent-gold: #c5a880;
     --font-jp: 'Noto Sans JP', sans-serif;
     --font-en: 'Cinzel', serif;
 }
@@ -729,6 +730,62 @@ body {
     color: #ffffff;
     font-weight: 300;
     margin-bottom: 3rem;
+}
+
+/* Gold Divider */
+.gold-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 8vh auto;
+    width: 100%;
+    max-width: 280px;
+    opacity: 0.35;
+    pointer-events: none;
+}
+
+.gold-divider::before,
+.gold-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--accent-gold));
+}
+
+.gold-divider::after {
+    background: linear-gradient(to left, transparent, var(--accent-gold));
+}
+
+.gold-divider-mark {
+    margin: 0 1.5rem;
+    font-family: var(--font-en);
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    color: var(--accent-gold);
+    font-weight: 300;
+}
+
+/* Mobile Scroll Breathing Room Optimization */
+@media (max-width: 768px) {
+    .section {
+        min-height: auto;
+        padding: 10vh 6vw;
+    }
+    
+    /* Keep specific cinematic sections as full screens */
+    .section-hero,
+    .section-5-text,
+    .section-outro {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    /* Optimize breathing spaces on mobile */
+    .gold-divider {
+        margin: 6vh auto;
+    }
 }
 
 /* Utility / GSAP Initial states */
