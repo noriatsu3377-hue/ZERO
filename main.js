@@ -172,6 +172,40 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     );
 
+    // --- Profile Collage Reveal ---
+    gsap.fromTo(".profile-collage-main", 
+        { opacity: 0, x: -40, y: 40, filter: "blur(5px)" },
+        {
+            opacity: 1,
+            x: 0,
+            y: 0,
+            filter: "blur(0px)",
+            duration: 1.5,
+            ease: "power3.out",
+            scrollTrigger: {
+                trigger: ".profile-collage-container",
+                start: "top 80%",
+            }
+        }
+    );
+
+    gsap.fromTo(".profile-collage-sub", 
+        { opacity: 0, x: 40, y: 40, filter: "blur(5px)" },
+        {
+            opacity: 1,
+            x: 0,
+            y: 0,
+            filter: "blur(0px)",
+            duration: 1.5,
+            delay: 0.2,
+            ease: "power3.out",
+            scrollTrigger: {
+                trigger: ".profile-collage-container",
+                start: "top 80%",
+            }
+        }
+    );
+
     // --- Section 7 & Outro ---
     // Hide light bg
     ScrollTrigger.create({

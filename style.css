@@ -423,36 +423,120 @@ body {
 }
 
 /* Profile */
+/* Profile */
 .profile-card {
     text-align: left;
     max-width: 600px;
     margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.profile-image-wrapper {
+.profile-collage-container {
+    position: relative;
     width: 100%;
-    max-width: 400px;
+    max-width: 360px;
+    height: 460px;
     margin: 0 auto 3rem auto;
+}
+
+.profile-collage-main {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 68%;
+    z-index: 1;
+    opacity: 0; /* Revealed by GSAP */
     border-radius: 4px;
     overflow: hidden;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-.profile-image {
+.profile-collage-sub {
+    position: absolute;
+    bottom: 8%;
+    right: 0;
+    width: 62%;
+    z-index: 2;
+    opacity: 0; /* Revealed by GSAP */
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.collage-image {
     width: 100%;
     height: auto;
     display: block;
-    filter: grayscale(100%) contrast(1.1);
-    transition: filter 0.5s ease;
+    filter: grayscale(100%) contrast(1.15) brightness(0.95);
+    transition: filter 0.6s ease, transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-.profile-image:hover {
-    filter: grayscale(80%) contrast(1.1);
+/* Hover interaction effects */
+.profile-collage-container:hover .collage-image {
+    filter: grayscale(100%) contrast(1.0) brightness(0.6) opacity(0.5);
+}
+
+.profile-collage-main:hover {
+    z-index: 3;
+    transform: translateY(-8px) scale(1.02);
+    border-color: rgba(255, 255, 255, 0.4);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8), 0 0 15px rgba(255, 255, 255, 0.1);
+}
+
+.profile-collage-main:hover .collage-image {
+    filter: grayscale(15%) contrast(1.15) brightness(1.05) opacity(1);
+    transform: scale(1.03);
+}
+
+.profile-collage-sub:hover {
+    z-index: 3;
+    transform: translateY(-8px) scale(1.02);
+    border-color: rgba(255, 255, 255, 0.4);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8), 0 0 15px rgba(255, 255, 255, 0.1);
+}
+
+.profile-collage-sub:hover .collage-image {
+    filter: grayscale(15%) contrast(1.15) brightness(1.05) opacity(1);
+    transform: scale(1.03);
+}
+
+.profile-content {
+    width: 100%;
 }
 
 .profile-header {
     margin-bottom: 3rem;
     text-align: center;
+}
+
+@media (min-width: 992px) {
+    .profile-card {
+        display: grid;
+        grid-template-columns: 1.2fr 1fr;
+        gap: 5rem;
+        align-items: start;
+        max-width: 1000px;
+    }
+    
+    .profile-collage-container {
+        max-width: 480px;
+        height: 600px;
+        margin-bottom: 0;
+    }
+    
+    .profile-content {
+        text-align: left;
+    }
+    
+    .profile-header {
+        text-align: left;
+    }
 }
 
 .profile-name {
