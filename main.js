@@ -18,37 +18,59 @@ document.addEventListener("DOMContentLoaded", () => {
         ease: "sine.inOut"
     });
 
-    // --- Hero Sequence (Pinning) ---
-    const heroTl = gsap.timeline({
-        scrollTrigger: {
-            trigger: ".section-hero",
-            start: "top top",
-            end: "+=300%", // Increased for slower, more cinematic pacing
-            scrub: 1,
-            pin: true
-        }
-    });
+    // --- Hero Sequence (Time-based, no scrolling required) ---
+    // Handle accessibility preference for reduced motion
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const animDuration = prefersReducedMotion ? 0 : 1;
 
-    // Initial dark water is shown
-    // text 1
-    heroTl.fromTo(".text-1", { opacity: 0, y: 20, filter: "blur(10px)" }, { opacity: 1, y: -20, filter: "blur(0px)", duration: 1 })
-          .to(".text-1", { opacity: 0, y: -40, filter: "blur(10px)", duration: 1 }, "+=0.5");
+    const heroTl = gsap.timeline();
     
-    // text 2 + Neural BG
-    heroTl.to("#bg-neural", { opacity: 1, duration: 1 }, "-=0.5")
-          .fromTo(".text-2", { opacity: 0, y: 20, filter: "blur(10px)" }, { opacity: 1, y: -20, filter: "blur(0px)", duration: 1 }, "-=0.5")
-          .to(".text-2", { opacity: 0, y: -40, filter: "blur(10px)", duration: 1 }, "+=0.5");
-    
-    // text 3 & Silhouette
-    heroTl.fromTo(".text-3", { opacity: 0, y: 20, filter: "blur(10px)" }, { opacity: 1, y: -20, filter: "blur(0px)", duration: 1 })
-          .to("#bg-silhouette", { opacity: 0.6, duration: 1.5 }, "-=1") // Silhouette fades in
-          .to(".text-3", { opacity: 0, y: -40, filter: "blur(10px)", duration: 1 }, "+=0.5");
-    
-    // text 4 (Massive ZERO) + Hide Neural and Silhouette
-    heroTl.to("#bg-neural", { opacity: 0, duration: 1 }, "-=0.5")
-          .to("#bg-silhouette", { opacity: 0, duration: 1 }, "-=1")
-          .fromTo(".text-4", { opacity: 0, scale: 0.9, filter: "blur(20px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 2 })
-          .to(".hero-cta-wrapper", { opacity: 1, y: -20, duration: 1 }, "-=0.5");
+    // Subtle background fade in
+    heroTl.to("#bg-neural", { opacity: 0.3, duration: animDuration * 1.5 }, 0.5)
+          .to("#bg-silhouette", { opacity: 0.4, duration: animDuration * 2 }, 0.5);
+
+    // Fade in Brand Name
+    heroTl.fromTo(".hero-brand", 
+        { opacity: 0, y: 20, filter: prefersReducedMotion ? "none" : "blur(10px)" },
+        { opacity: 1, y: 0, filter: "blur(0px)", duration: animDuration * 1.2, ease: "power2.out" },
+        0.2
+    );
+
+    // Fade in Main Copy and Description
+    heroTl.fromTo(".hero-copy-wrapper",
+        { opacity: 0, y: 20, filter: prefersReducedMotion ? "none" : "blur(10px)" },
+        { opacity: 1, y: 0, filter: "blur(0px)", duration: animDuration * 1.2, ease: "power2.out" },
+        "-=0.8"
+    );
+
+    // Fade in CTA and Scroll Indicator
+    heroTl.fromTo(".hero-cta-wrapper",
+        { opacity: 0, y: 10 },
+        { opacity: 1, y: 0, duration: animDuration, ease: "power2.out" },
+        "-=0.6"
+    );
+
+    heroTl.fromTo(".scroll-indicator",
+        { opacity: 0 },
+        { opacity: 1, duration: animDuration, ease: "power2.out" },
+        "-=0.6"
+    );
+
+    // Smooth scroll for CTA button
+    const scrollBtn = document.querySelector('.js-scroll-btn');
+    if (scrollBtn) {
+        scrollBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const targetId = scrollBtn.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                window.scrollTo({
+                    top: targetElement.offsetTop,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    }
 
     // --- Generic Fade Up Animations ---
     gsap.utils.toArray('.gs-fade-up').forEach(elem => {
